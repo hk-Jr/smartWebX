@@ -1,0 +1,173 @@
+================================================================================
+INTELLIGENT KNOWLEDGE RETRIEVAL AND QUESTION ANSWERING SYSTEM (RAG)
+SETUP, DEPENDENCY INSTALLATION, AND RUN COMMANDS FOR NEW MACHINES
+================================================================================
+
+This document contains step-by-step instructions to clone, install all 
+dependencies, and run this application on any other laptop or machine.
+
+--------------------------------------------------------------------------------
+PREREQUISITES (Must be installed on the machine)
+--------------------------------------------------------------------------------
+1. Python 3.10+ (Python 3.11, 3.12, or 3.13 recommended)
+   Download from: https://www.python.org/downloads/
+   *IMPORTANT on Windows: Check the box "Add Python to PATH" during installation.*
+
+2. Node.js 18+ and npm
+   Download from: https://nodejs.org/
+
+3. Git
+   Download from: https://git-scm.com/
+
+--------------------------------------------------------------------------------
+STEP 1: CLONE AND NAVIGATE TO THE PROJECT
+--------------------------------------------------------------------------------
+Open a terminal / command prompt and run:
+
+    git clone <YOUR-REPOSITORY-URL>
+    cd SmartXWeb-genAi
+
+--------------------------------------------------------------------------------
+STEP 2: DEPENDENCY INSTALLATION COMMANDS
+--------------------------------------------------------------------------------
+
+A. INSTALL BACKEND DEPENDENCIES (Python Virtual Environment & Libraries):
+
+   [WINDOWS POWERSHELL]:
+   ---------------------
+   cd backend
+   python -m venv venv
+   .\venv\Scripts\activate
+   python -m pip install --upgrade pip
+   pip install -r requirements.txt
+   cd ..
+
+   [WINDOWS COMMAND PROMPT (CMD)]:
+   -------------------------------
+   cd backend
+   python -m venv venv
+   venv\Scripts\activate.bat
+   python -m pip install --upgrade pip
+   pip install -r requirements.txt
+   cd ..
+
+   [macOS / LINUX BASH]:
+   ---------------------
+   cd backend
+   python3 -m venv venv
+   source venv/bin/activate
+   python -m pip install --upgrade pip
+   pip install -r requirements.txt
+   cd ..
+
+
+B. INSTALL FRONTEND DEPENDENCIES (Node.js & NPM Packages):
+
+   [ANY PLATFORM (Windows / macOS / Linux)]:
+   -----------------------------------------
+   cd frontend
+   npm install
+   cd ..
+
+
+C. GENERATE TEST SAMPLE DOCUMENTS (Optional but Recommended):
+   Creates sample PDF, DOCX, TXT, and Markdown files inside data/sample_documents/
+
+   [WINDOWS]:
+   ----------
+   .\backend\venv\Scripts\python generate_sample_docs.py
+
+   [macOS / LINUX]:
+   ----------------
+   ./backend/venv/bin/python generate_sample_docs.py
+
+--------------------------------------------------------------------------------
+STEP 3: RUN COMMANDS (How to Launch the Application)
+--------------------------------------------------------------------------------
+
+METHOD A: ONE-COMMAND LAUNCHER (RECOMMENDED)
+--------------------------------------------
+From the root directory ("SmartXWeb-genAi"):
+
+   [WINDOWS (Option 1 - Double Click)]:
+   Simply double-click the file named:
+       start.bat
+
+   [WINDOWS / macOS / LINUX (Option 2 - Terminal)]:
+   Run:
+       python start_app.py
+
+   This launcher starts both the FastAPI backend and the Vite frontend dev server,
+   and will cleanly shut both down when you press Ctrl+C in the terminal.
+
+
+METHOD B: RUNNING SERVICES SEPARATELY (IN 2 TERMINALS)
+------------------------------------------------------
+If you prefer running the backend and frontend in separate terminals:
+
+   TERMINAL 1 - START BACKEND:
+   ---------------------------
+   cd backend
+   # Windows PowerShell:
+   .\venv\Scripts\activate
+   # Windows CMD:
+   venv\Scripts\activate.bat
+   # macOS / Linux:
+   source venv/bin/activate
+
+   uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+
+   TERMINAL 2 - START FRONTEND:
+   ----------------------------
+   cd frontend
+   npm run dev
+
+--------------------------------------------------------------------------------
+STEP 4: ACCESS THE LIVE APPLICATION
+--------------------------------------------------------------------------------
+Once started, open your web browser and navigate to:
+
+   - Frontend Web Application:  http://localhost:5173
+   - Backend REST API:          http://localhost:8000/api/health
+   - Interactive Swagger Docs:  http://localhost:8000/docs
+
+--------------------------------------------------------------------------------
+STEP 5: VERIFY INSTALLATION (RUN AUTOMATED TEST CASES)
+--------------------------------------------------------------------------------
+To verify that document parsing, chunking, ChromaDB vector indexing, semantic
+retrieval, and grounded answering work 100% on the new laptop, run:
+
+   [WINDOWS]:
+   ----------
+   cd backend
+   .\venv\Scripts\python -m pytest tests/ -v
+
+   [macOS / LINUX]:
+   ----------------
+   cd backend
+   ./venv/bin/python -m pytest tests/ -v
+
+   *All 9 test suites should output PASSED.*
+
+--------------------------------------------------------------------------------
+OPTIONAL: CONFIGURE AI PROVIDER KEYS
+--------------------------------------------------------------------------------
+Note: The system works 100% out of the box with zero keys required using the
+built-in "Smart Local Grounded Engine".
+
+If you wish to use external AI providers:
+1. Google Gemini:
+   - In the Web UI, open the "Settings" tab and paste your GEMINI_API_KEY.
+   - Or create a ".env" file in the "backend" directory with:
+     GEMINI_API_KEY="your-gemini-api-key"
+
+2. OpenAI:
+   - In the Web UI, open the "Settings" tab and paste your OPENAI_API_KEY.
+   - Or in "backend/.env":
+     OPENAI_API_KEY="sk-..."
+
+3. Local Ollama:
+   - Make sure Ollama is running on the laptop: http://localhost:11434
+   - In the Web UI, select "Ollama" (supports llama3, codellama, deepseek-r1, etc.).
+================================================================================
+

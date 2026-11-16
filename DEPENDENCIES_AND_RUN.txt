@@ -1,0 +1,128 @@
+================================================================================
+INTELLIGENT KNOWLEDGE RETRIEVAL AND QUESTION ANSWERING SYSTEM (RAG)
+DEPENDENCY INSTALLATION & RUN GUIDE FOR CLONING ON OTHER MACHINES
+================================================================================
+
+This file contains the complete commands to install all required dependencies 
+and run the application on any new laptop (Windows, macOS, or Linux).
+
+--------------------------------------------------------------------------------
+PREREQUISITES
+--------------------------------------------------------------------------------
+Make sure the new laptop has installed:
+1. Python 3.10+ (Check "Add Python to PATH" on Windows during installation)
+2. Node.js 18+ and npm
+3. Git
+
+--------------------------------------------------------------------------------
+1. DEPENDENCY INSTALLATION COMMANDS
+--------------------------------------------------------------------------------
+
+A. BACKEND DEPENDENCIES (FastAPI, ChromaDB, PyMuPDF, python-docx, PyYAML, etc.)
+
+   [WINDOWS POWERSHELL]:
+   cd backend
+   python -m venv venv
+   .\venv\Scripts\activate
+   python -m pip install --upgrade pip
+   pip install -r requirements.txt
+   cd ..
+
+   [WINDOWS CMD]:
+   cd backend
+   python -m venv venv
+   venv\Scripts\activate.bat
+   python -m pip install --upgrade pip
+   pip install -r requirements.txt
+   cd ..
+
+   [macOS / LINUX BASH]:
+   cd backend
+   python3 -m venv venv
+   source venv/bin/activate
+   python -m pip install --upgrade pip
+   pip install -r requirements.txt
+   cd ..
+
+
+B. FRONTEND DEPENDENCIES (React 19 JSX, Bootstrap 5, Lucide React, Framer Motion)
+
+   [ALL PLATFORMS (Windows / macOS / Linux)]:
+   cd frontend
+   npm install
+   cd ..
+
+
+C. SAMPLE TEST DOCUMENTS (Optional):
+   Generates test PDF, DOCX, TXT, and Markdown files in data/sample_documents/
+
+   [WINDOWS]:
+   .\backend\venv\Scripts\python generate_sample_docs.py
+
+   [macOS / LINUX]:
+   ./backend/venv/bin/python generate_sample_docs.py
+
+--------------------------------------------------------------------------------
+2. RUNNABLE COMMANDS (HOW TO START THE SYSTEM)
+--------------------------------------------------------------------------------
+
+OPTION 1: AUTOMATIC ONE-COMMAND LAUNCHER (RECOMMENDED)
+From the project root directory:
+
+   [WINDOWS]:
+   Double-click "start.bat" OR run in terminal:
+   python start_app.py
+
+   [macOS / LINUX]:
+   python3 start_app.py
+
+   (This simultaneously launches the FastAPI backend on port 8000 and the 
+    Vite React frontend on port 5173, and shuts down both when you press Ctrl+C).
+
+
+OPTION 2: RUN IN TWO SEPARATE TERMINALS
+
+   TERMINAL 1 (BACKEND):
+   cd backend
+   # Activate virtualenv:
+   # Windows PowerShell: .\venv\Scripts\activate
+   # Windows CMD:        venv\Scripts\activate.bat
+   # macOS / Linux:      source venv/bin/activate
+   uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+
+   TERMINAL 2 (FRONTEND):
+   cd frontend
+   npm run dev
+
+--------------------------------------------------------------------------------
+3. APPLICATION ACCESS URLS
+--------------------------------------------------------------------------------
+Once started, access the application at:
+- Web Application:       http://localhost:5173
+- Backend REST API:       http://localhost:8000/api/health
+- Interactive API Docs:   http://localhost:8000/docs
+
+--------------------------------------------------------------------------------
+4. VERIFICATION / TEST SUITE
+--------------------------------------------------------------------------------
+To verify that all 9 RAG components, document parsing, chunking, ChromaDB,
+and citation grounding are working properly on the new machine:
+
+   # From the root directory:
+   .\backend\venv\Scripts\python -m pytest -v
+
+   # Or from backend directory:
+   cd backend
+   .\venv\Scripts\python -m pytest tests/ -v
+
+   (Expected result: 9 passed in ~17s)
+
+--------------------------------------------------------------------------------
+5. AI MODEL CONFIGURATION (OPTIONAL)
+--------------------------------------------------------------------------------
+- Built-in Smart Local Grounded Engine: Works immediately with 0 configuration.
+- Local Ollama: Start Ollama (http://localhost:11434) and select model in Settings.
+- Google Gemini: Paste GEMINI_API_KEY in the Settings UI or in backend/.env.
+- OpenAI: Paste OPENAI_API_KEY in the Settings UI or in backend/.env.
+================================================================================
+
